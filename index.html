@@ -4,151 +4,214 @@
 <meta charset="UTF-8">
 <title>MercadoShop | Compramos por ti</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-:root{--azul:#0d6efd;--verde:#25D366;--gris:#f4f6f9;}
+:root{
+  --azul:#0d6efd;
+  --verde:#25D366;
+  --gris:#f4f6f9;
+}
+
 *{box-sizing:border-box;}
-body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--gris);}
-header{background:linear-gradient(135deg,#0d6efd,#084298);color:white;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+body{margin:0;font-family:Segoe UI,Arial;background:var(--gris);}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,#0d6efd,#084298);
+  color:white;
+  padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 .carrito-btn{background:white;color:#0d6efd;padding:6px 12px;border-radius:20px;font-weight:bold;}
+
+/* BUSCADOR */
 .buscador{padding:10px;}
-.buscador input{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;}
-.carrusel{margin:10px;border-radius:12px;overflow:hidden;position:relative;background:white;}
-.carrusel img{width:100%;height:200px;object-fit:contain;display:none;}
+.buscador input{
+  width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;font-size:15px;
+}
+
+/* CARRUSEL */
+.carrusel{margin:10px;border-radius:12px;overflow:hidden;position:relative;}
+.carrusel img{
+  width:100%;
+  height:200px;
+  object-fit:contain;
+  background:white;
+  display:none;
+}
 .carrusel img.activo{display:block;}
-.carrusel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.4);color:white;border:none;font-size:20px;padding:5px 10px;border-radius:50%;}
-.prev{left:5px;} .next{right:5px;}
-.categorias{display:flex;gap:10px;overflow-x:auto;padding:10px;}
-.categorias button{padding:8px 14px;border:none;border-radius:20px;background:white;}
-.seccion h3{margin:10px;}
-.productos-scroll{display:flex;gap:10px;overflow-x:auto;padding:10px;}
-.producto{min-width:140px;background:white;border-radius:12px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.1);}
-.producto img{width:100%;height:120px;object-fit:contain;}
+.carrusel-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(0,0,0,.4);color:white;border:none;font-size:20px;padding:5px 10px;
+}
+.prev{left:5px;}
+.next{right:5px;}
+
+/* CATEGORIAS */
+.categorias{
+  display:flex;gap:10px;overflow-x:auto;padding:10px;
+}
+.categorias button{
+  flex:0 0 auto;padding:8px 14px;border:none;border-radius:20px;background:white;font-size:14px;
+}
+
+/* PRODUCTOS */
+.container{padding:10px;}
+.productos{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+}
+.producto{
+  min-width:160px;
+  background:white;
+  border-radius:12px;
+  padding:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+  transition:.3s;
+}
+.producto img{
+  width:100%;
+  height:120px;
+  object-fit:contain;
+}
+.producto h3{font-size:14px;margin:5px 0;}
 .precio{color:var(--azul);font-weight:bold;}
-.btn{width:100%;padding:7px;border:none;border-radius:8px;margin-top:5px;}
+.btn{
+  width:100%;
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  font-size:13px;
+  margin-top:4px;
+}
 .btn-carrito{background:var(--azul);color:white;}
 .btn-pedir{background:var(--verde);color:white;}
-.producto.agregado{animation:pulse .3s;}
-@keyframes pulse{50%{transform:scale(1.08);}}
-#overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;}
-#carrito{position:fixed;bottom:-100%;left:0;width:100%;height:85%;background:white;border-radius:20px 20px 0 0;padding:15px;transition:.4s;overflow-y:auto;}
+
+.animar{animation:salto .5s;}
+@keyframes salto{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
+}
+
+/* CARRITO */
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:99;}
+#carrito{
+  position:fixed;bottom:-100%;left:0;width:100%;height:85%;
+  background:white;border-radius:20px 20px 0 0;padding:15px;
+  transition:.4s;z-index:100;overflow-y:auto;
+}
 #carrito.activo{bottom:0;}
-.eliminar{color:red;font-size:13px;}
-#sinResultados{text-align:center;display:none;color:#888;margin:15px;}
+.carrito-item{border-bottom:1px solid #ddd;padding:8px 0;}
+.eliminar{color:red;font-size:13px;cursor:pointer;}
 </style>
 </head>
 
 <body>
 
 <header>
-<h2>🛒 MercadoShop</h2>
-<div class="carrito-btn" onclick="toggleCarrito()">🛍 (<span id="contador">0</span>)</div>
+  <h2>🛒 MercadoShop</h2>
+  <div class="carrito-btn" onclick="toggleCarrito()">🛍 (<span id="contador">0</span>)</div>
 </header>
 
 <div class="buscador">
-<input type="search" id="buscar" placeholder="Buscar productos..." onsearch="buscarProducto()">
+  <input type="search" id="buscar" placeholder="🔍 Buscar productos..." onkeyup="buscarProducto()" onsearch="ocultarTeclado()">
 </div>
 
 <div class="carrusel">
-<img src="https://cdn-icons-png.flaticon.com/512/891/891462.png" class="activo">
-<img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
-<img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png">
-<button class="carrusel-btn prev" onclick="cambiar(-1)">◀</button>
-<button class="carrusel-btn next" onclick="cambiar(1)">▶</button>
+  <img src="https://cdn-icons-png.flaticon.com/512/891/891462.png" class="activo">
+  <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png">
+  <img src="https://cdn-icons-png.flaticon.com/512/3144/3144456.png">
+  <button class="carrusel-btn prev" onclick="cambiar(-1)">◀</button>
+  <button class="carrusel-btn next" onclick="cambiar(1)">▶</button>
 </div>
 
 <div class="categorias">
-<button onclick="filtrar('todos')">Todos</button>
-<button onclick="filtrar('electronica')">Electrónica</button>
-<button onclick="filtrar('audio')">Audio</button>
-<button onclick="filtrar('hogar')">Hogar</button>
-<button onclick="filtrar('moda')">Moda</button>
-<button onclick="filtrar('gaming')">Gaming</button>
+  <button onclick="filtrar('todos')">Todos</button>
+  <button onclick="filtrar('audio')">Audio</button>
+  <button onclick="filtrar('electronica')">Electrónica</button>
+  <button onclick="filtrar('hogar')">Hogar</button>
+  <button onclick="filtrar('moda')">Moda</button>
+  <button onclick="filtrar('gaming')">Gaming</button>
 </div>
 
-<!-- ELECTRONICA -->
-<div class="seccion" data-cat="electronica">
-<h3>📱 Electrónica</h3>
-<div class="productos-scroll">
-<div class="producto">
-<img src="https://cdn-icons-png.flaticon.com/512/3659/3659899.png">
-<h4>Celular</h4><p class="precio">$3500</p>
-<button class="btn btn-carrito" onclick="agregar(this,'Celular',3500)">Agregar</button>
-<button class="btn btn-pedir" onclick="pedidoDirecto('Celular',3500)">Pedir</button>
-</div>
-<div class="producto">
-<img src="https://cdn-icons-png.flaticon.com/512/1792/1792905.png">
-<h4>Laptop</h4><p class="precio">$9500</p>
-<button class="btn btn-carrito" onclick="agregar(this,'Laptop',9500)">Agregar</button>
-<button class="btn btn-pedir" onclick="pedidoDirecto('Laptop',9500)">Pedir</button>
-</div>
-</div>
-</div>
+<div class="container">
+<div class="productos" id="listaProductos">
 
-<!-- AUDIO -->
-<div class="seccion" data-cat="audio">
-<h3>🎧 Audio</h3>
-<div class="productos-scroll">
-<div class="producto">
-<img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png">
-<h4>Audífonos</h4><p class="precio">$450</p>
-<button class="btn btn-carrito" onclick="agregar(this,'Audífonos',450)">Agregar</button>
-<button class="btn btn-pedir" onclick="pedidoDirecto('Audífonos',450)">Pedir</button>
-</div>
-<div class="producto">
-<img src="https://cdn-icons-png.flaticon.com/512/727/727245.png">
-<h4>Bocina</h4><p class="precio">$1200</p>
-<button class="btn btn-carrito" onclick="agregar(this,'Bocina',1200)">Agregar</button>
-<button class="btn btn-pedir" onclick="pedidoDirecto('Bocina',1200)">Pedir</button>
-</div>
-</div>
-</div>
+  <!-- AUDIO -->
+  <div class="producto" data-cat="audio">
+    <img src="https://cdn-icons-png.flaticon.com/512/891/891462.png">
+    <h3>Audífonos Bluetooth</h3>
+    <p class="precio">$450</p>
+    <button class="btn btn-carrito" onclick="agregar(this,'Audífonos Bluetooth',450)">Agregar</button>
+    <button class="btn btn-pedir" onclick="pedidoDirecto('Audífonos Bluetooth',450)">Pedir</button>
+  </div>
 
-<!-- HOGAR -->
-<div class="seccion" data-cat="hogar">
-<h3>🏠 Hogar</h3>
-<div class="productos-scroll">
-<div class="producto">
-<img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
-<h4>Licuadora</h4><p class="precio">$1200</p>
-<button class="btn btn-carrito" onclick="agregar(this,'Licuadora',1200)">Agregar</button>
-<button class="btn btn-pedir" onclick="pedidoDirecto('Licuadora',1200)">Pedir</button>
-</div>
-</div>
-</div>
+  <div class="producto" data-cat="audio">
+    <img src="https://cdn-icons-png.flaticon.com/512/3097/3097144.png">
+    <h3>Bocina Portátil</h3>
+    <p class="precio">$650</p>
+    <button class="btn btn-carrito" onclick="agregar(this,'Bocina Portátil',650)">Agregar</button>
+    <button class="btn btn-pedir" onclick="pedidoDirecto('Bocina Portátil',650)">Pedir</button>
+  </div>
 
-<!-- MODA -->
-<div class="seccion" data-cat="moda">
-<h3>👕 Moda</h3>
-<div class="productos-scroll">
-<div class="producto">
-<img src="https://cdn-icons-png.flaticon.com/512/892/892458.png">
-<h4>Playera</h4><p class="precio">$250</p>
-<button class="btn btn-carrito" onclick="agregar(this,'Playera',250)">Agregar</button>
-<button class="btn btn-pedir" onclick="pedidoDirecto('Playera',250)">Pedir</button>
-</div>
-</div>
-</div>
+  <!-- ELECTRONICA -->
+  <div class="producto" data-cat="electronica">
+    <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
+    <h3>Smartwatch</h3>
+    <p class="precio">$850</p>
+    <button class="btn btn-carrito" onclick="agregar(this,'Smartwatch',850)">Agregar</button>
+    <button class="btn btn-pedir" onclick="pedidoDirecto('Smartwatch',850)">Pedir</button>
+  </div>
 
-<!-- GAMING -->
-<div class="seccion" data-cat="gaming">
-<h3>🎮 Gaming</h3>
-<div class="productos-scroll">
-<div class="producto">
-<img src="https://cdn-icons-png.flaticon.com/512/808/808439.png">
-<h4>Control</h4><p class="precio">$650</p>
-<button class="btn btn-carrito" onclick="agregar(this,'Control',650)">Agregar</button>
-<button class="btn btn-pedir" onclick="pedidoDirecto('Control',650)">Pedir</button>
-</div>
-</div>
-</div>
+  <div class="producto" data-cat="electronica">
+    <img src="https://cdn-icons-png.flaticon.com/512/2919/2919592.png">
+    <h3>Cargador Rápido</h3>
+    <p class="precio">$220</p>
+    <button class="btn btn-carrito" onclick="agregar(this,'Cargador Rápido',220)">Agregar</button>
+    <button class="btn btn-pedir" onclick="pedidoDirecto('Cargador Rápido',220)">Pedir</button>
+  </div>
 
-<p id="sinResultados">No se encontraron productos 😕</p>
+  <!-- HOGAR -->
+  <div class="producto" data-cat="hogar">
+    <img src="https://cdn-icons-png.flaticon.com/512/194/194938.png">
+    <h3>Lámpara LED</h3>
+    <p class="precio">$180</p>
+    <button class="btn btn-carrito" onclick="agregar(this,'Lámpara LED',180)">Agregar</button>
+    <button class="btn btn-pedir" onclick="pedidoDirecto('Lámpara LED',180)">Pedir</button>
+  </div>
+
+  <!-- MODA -->
+  <div class="producto" data-cat="moda">
+    <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png">
+    <h3>Playera Casual</h3>
+    <p class="precio">$250</p>
+    <button class="btn btn-carrito" onclick="agregar(this,'Playera Casual',250)">Agregar</button>
+    <button class="btn btn-pedir" onclick="pedidoDirecto('Playera Casual',250)">Pedir</button>
+  </div>
+
+  <!-- GAMING -->
+  <div class="producto" data-cat="gaming">
+    <img src="https://cdn-icons-png.flaticon.com/512/1068/1068774.png">
+    <h3>Control Gamer</h3>
+    <p class="precio">$720</p>
+    <button class="btn btn-carrito" onclick="agregar(this,'Control Gamer',720)">Agregar</button>
+    <button class="btn btn-pedir" onclick="pedidoDirecto('Control Gamer',720)">Pedir</button>
+  </div>
+
+</div>
+</div>
 
 <div id="overlay" onclick="toggleCarrito()"></div>
+
 <div id="carrito">
 <h3>Tu carrito</h3>
 <div id="lista"></div>
 <p><strong>Total: $<span id="total">0</span></strong></p>
+<button class="btn btn-pedir" onclick="enviarWhatsApp()">Pedir por WhatsApp</button>
 </div>
 
 <script>
@@ -160,52 +223,56 @@ slides[index].classList.add("activo");
 }
 setInterval(()=>cambiar(1),4000);
 
-function filtrar(cat){
-document.querySelectorAll(".seccion").forEach(s=>{
-s.style.display=(cat=="todos"||s.dataset.cat==cat)?"block":"none";
-});
-}
-
-function buscarProducto(){
-document.activeElement.blur();
-let txt=document.getElementById("buscar").value.toLowerCase().trim();
-let hay=false;
-
-document.querySelectorAll(".seccion").forEach(seccion=>{
-let visible=false;
-seccion.querySelectorAll(".producto").forEach(p=>{
-let match=p.innerText.toLowerCase().includes(txt);
-p.style.display=match?"block":"none";
-if(match) visible=true;
-});
-seccion.style.display=(visible||txt==="")?"block":"none";
-if(visible) hay=true;
-});
-
-document.getElementById("sinResultados").style.display=(!hay && txt!=="")?"block":"none";
-}
-
 let carrito=[],total=0;
+
 function toggleCarrito(){
 carritoDiv.classList.toggle("activo");
 overlay.style.display=carritoDiv.classList.contains("activo")?"block":"none";
 }
+
 function agregar(btn,n,p){
-btn.parentElement.classList.add("agregado");
-setTimeout(()=>btn.parentElement.classList.remove("agregado"),300);
+btn.classList.add("animar");
+setTimeout(()=>btn.classList.remove("animar"),500);
 carrito.push({n,p});total+=p;actualizar();
 }
+
 function actualizar(){
 lista.innerHTML="";
 carrito.forEach((x,i)=>{
-lista.innerHTML+=`${x.n} - $${x.p} <div class="eliminar" onclick="eliminar(${i})">Eliminar</div>`;
+lista.innerHTML+=`<div class="carrito-item">${x.n} - $${x.p}<div class="eliminar" onclick="eliminar(${i})">Eliminar</div></div>`;
 });
 totalSpan.innerText=total;
 contador.innerText=carrito.length;
 }
+
 function eliminar(i){
-total-=carrito[i].p;carrito.splice(i,1);actualizar();
+total-=carrito[i].p;
+carrito.splice(i,1);
+actualizar();
 }
+
+function filtrar(cat){
+document.querySelectorAll(".producto").forEach(p=>{
+p.style.display=(cat=="todos"||p.dataset.cat==cat)?"block":"none";
+});
+}
+
+function buscarProducto(){
+let q=document.getElementById("buscar").value.toLowerCase();
+document.querySelectorAll(".producto").forEach(p=>{
+let nombre=p.querySelector("h3").innerText.toLowerCase();
+p.style.display=nombre.includes(q)?"block":"none";
+});
+}
+
+function ocultarTeclado(){document.getElementById("buscar").blur();}
+
+function enviarWhatsApp(){
+let t="Hola quiero pedir:%0A";
+carrito.forEach(x=>t+=`- ${x.n} $${x.p}%0A`);
+window.open("https://wa.me/52TU_NUMERO?text="+t);
+}
+
 function pedidoDirecto(n,p){
 window.open(`https://wa.me/52TU_NUMERO?text=Quiero pedir ${n} $${p}`);
 }
