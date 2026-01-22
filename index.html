@@ -8,7 +8,7 @@
 :root{--azul:#0d6efd;--verde:#25D366;--gris:#f4f6f9;}
 *{box-sizing:border-box;}
 body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:var(--gris);}
-header{background:linear-gradient(135deg,#0d6efd,#084298);color:white;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+header{background:linear-gradient(135deg,#0d6efd,#084298);color:white;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;}
 .carrito-btn{background:white;color:#0d6efd;padding:6px 12px;border-radius:20px;font-weight:bold;}
 .buscador{padding:10px;}
 .buscador input{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;}
@@ -26,6 +26,7 @@ header{background:linear-gradient(135deg,#0d6efd,#084298);color:white;padding:12
 .precio{color:var(--azul);font-weight:bold;}
 .btn{width:100%;padding:7px;border:none;border-radius:8px;margin-top:5px;}
 .btn-carrito{background:var(--azul);color:white;}
+.btn-pedir{background:var(--verde);color:white;}
 .producto.agregado{animation:pulse .3s;}
 @keyframes pulse{50%{transform:scale(1.08);}}
 #overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;}
@@ -67,10 +68,18 @@ header{background:linear-gradient(135deg,#0d6efd,#084298);color:white;padding:12
 <div class="seccion" data-cat="electronica">
 <h3>📱 Electrónica</h3>
 <div class="productos-scroll">
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/3659/3659899.png"><h4>Celular</h4><p class="precio">$3500</p><button class="btn btn-carrito" onclick="agregar(this,'Celular',3500)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/747/747376.png"><h4>Tablet</h4><p class="precio">$2800</p><button class="btn btn-carrito" onclick="agregar(this,'Tablet',2800)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/1792/1792905.png"><h4>Laptop</h4><p class="precio">$9500</p><button class="btn btn-carrito" onclick="agregar(this,'Laptop',9500)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/3523/3523063.png"><h4>Power Bank</h4><p class="precio">$450</p><button class="btn btn-carrito" onclick="agregar(this,'Power Bank',450)">Agregar</button></div>
+<div class="producto">
+<img src="https://cdn-icons-png.flaticon.com/512/3659/3659899.png">
+<h4>Celular</h4><p class="precio">$3500</p>
+<button class="btn btn-carrito" onclick="agregar(this,'Celular',3500)">Agregar</button>
+<button class="btn btn-pedir" onclick="pedidoDirecto('Celular',3500)">Pedir</button>
+</div>
+<div class="producto">
+<img src="https://cdn-icons-png.flaticon.com/512/1792/1792905.png">
+<h4>Laptop</h4><p class="precio">$9500</p>
+<button class="btn btn-carrito" onclick="agregar(this,'Laptop',9500)">Agregar</button>
+<button class="btn btn-pedir" onclick="pedidoDirecto('Laptop',9500)">Pedir</button>
+</div>
 </div>
 </div>
 
@@ -78,9 +87,18 @@ header{background:linear-gradient(135deg,#0d6efd,#084298);color:white;padding:12
 <div class="seccion" data-cat="audio">
 <h3>🎧 Audio</h3>
 <div class="productos-scroll">
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png"><h4>Audífonos</h4><p class="precio">$450</p><button class="btn btn-carrito" onclick="agregar(this,'Audífonos',450)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/727/727245.png"><h4>Bocina</h4><p class="precio">$1200</p><button class="btn btn-carrito" onclick="agregar(this,'Bocina',1200)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/2920/2920329.png"><h4>Micrófono</h4><p class="precio">$700</p><button class="btn btn-carrito" onclick="agregar(this,'Micrófono',700)">Agregar</button></div>
+<div class="producto">
+<img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png">
+<h4>Audífonos</h4><p class="precio">$450</p>
+<button class="btn btn-carrito" onclick="agregar(this,'Audífonos',450)">Agregar</button>
+<button class="btn btn-pedir" onclick="pedidoDirecto('Audífonos',450)">Pedir</button>
+</div>
+<div class="producto">
+<img src="https://cdn-icons-png.flaticon.com/512/727/727245.png">
+<h4>Bocina</h4><p class="precio">$1200</p>
+<button class="btn btn-carrito" onclick="agregar(this,'Bocina',1200)">Agregar</button>
+<button class="btn btn-pedir" onclick="pedidoDirecto('Bocina',1200)">Pedir</button>
+</div>
 </div>
 </div>
 
@@ -88,9 +106,12 @@ header{background:linear-gradient(135deg,#0d6efd,#084298);color:white;padding:12
 <div class="seccion" data-cat="hogar">
 <h3>🏠 Hogar</h3>
 <div class="productos-scroll">
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png"><h4>Licuadora</h4><p class="precio">$1200</p><button class="btn btn-carrito" onclick="agregar(this,'Licuadora',1200)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/1046/1046857.png"><h4>Cafetera</h4><p class="precio">$1800</p><button class="btn btn-carrito" onclick="agregar(this,'Cafetera',1800)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/1693/1693746.png"><h4>Ventilador</h4><p class="precio">$900</p><button class="btn btn-carrito" onclick="agregar(this,'Ventilador',900)">Agregar</button></div>
+<div class="producto">
+<img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
+<h4>Licuadora</h4><p class="precio">$1200</p>
+<button class="btn btn-carrito" onclick="agregar(this,'Licuadora',1200)">Agregar</button>
+<button class="btn btn-pedir" onclick="pedidoDirecto('Licuadora',1200)">Pedir</button>
+</div>
 </div>
 </div>
 
@@ -98,9 +119,12 @@ header{background:linear-gradient(135deg,#0d6efd,#084298);color:white;padding:12
 <div class="seccion" data-cat="moda">
 <h3>👕 Moda</h3>
 <div class="productos-scroll">
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/892/892458.png"><h4>Playera</h4><p class="precio">$250</p><button class="btn btn-carrito" onclick="agregar(this,'Playera',250)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/3345/3345397.png"><h4>Pantalón</h4><p class="precio">$550</p><button class="btn btn-carrito" onclick="agregar(this,'Pantalón',550)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/2589/2589993.png"><h4>Tenis</h4><p class="precio">$1200</p><button class="btn btn-carrito" onclick="agregar(this,'Tenis',1200)">Agregar</button></div>
+<div class="producto">
+<img src="https://cdn-icons-png.flaticon.com/512/892/892458.png">
+<h4>Playera</h4><p class="precio">$250</p>
+<button class="btn btn-carrito" onclick="agregar(this,'Playera',250)">Agregar</button>
+<button class="btn btn-pedir" onclick="pedidoDirecto('Playera',250)">Pedir</button>
+</div>
 </div>
 </div>
 
@@ -108,9 +132,12 @@ header{background:linear-gradient(135deg,#0d6efd,#084298);color:white;padding:12
 <div class="seccion" data-cat="gaming">
 <h3>🎮 Gaming</h3>
 <div class="productos-scroll">
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/808/808439.png"><h4>Control</h4><p class="precio">$650</p><button class="btn btn-carrito" onclick="agregar(this,'Control',650)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/3612/3612569.png"><h4>Teclado Gamer</h4><p class="precio">$980</p><button class="btn btn-carrito" onclick="agregar(this,'Teclado Gamer',980)">Agregar</button></div>
-<div class="producto"><img src="https://cdn-icons-png.flaticon.com/512/2933/2933245.png"><h4>Mouse Gamer</h4><p class="precio">$550</p><button class="btn btn-carrito" onclick="agregar(this,'Mouse Gamer',550)">Agregar</button></div>
+<div class="producto">
+<img src="https://cdn-icons-png.flaticon.com/512/808/808439.png">
+<h4>Control</h4><p class="precio">$650</p>
+<button class="btn btn-carrito" onclick="agregar(this,'Control',650)">Agregar</button>
+<button class="btn btn-pedir" onclick="pedidoDirecto('Control',650)">Pedir</button>
+</div>
 </div>
 </div>
 
@@ -138,7 +165,7 @@ s.style.display=(cat=="todos"||s.dataset.cat==cat)?"block":"none";
 
 function buscarProducto(){
 document.activeElement.blur();
-let txt=document.getElementById("buscar").value.toLowerCase();
+let txt=document.getElementById("buscar").value.toLowerCase().trim();
 document.querySelectorAll(".producto").forEach(p=>{
 p.style.display=p.innerText.toLowerCase().includes(txt)?"block":"none";
 });
@@ -164,6 +191,10 @@ contador.innerText=carrito.length;
 }
 function eliminar(i){
 total-=carrito[i].p;carrito.splice(i,1);actualizar();
+}
+
+function pedidoDirecto(n,p){
+window.open(`https://wa.me/52TU_NUMERO?text=Quiero pedir ${n} $${p}`);
 }
 
 const carritoDiv=document.getElementById("carrito"),
