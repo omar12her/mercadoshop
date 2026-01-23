@@ -11,35 +11,26 @@
   --verde:#25D366;
   --gris:#f4f6f9;
 }
-
 *{box-sizing:border-box;}
 body{margin:0;font-family:Segoe UI,Arial;background:var(--gris);}
 
 /* HEADER */
 header{
   background:linear-gradient(135deg,#0d6efd,#084298);
-  color:white;
-  padding:12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  color:white;padding:12px;
+  display:flex;justify-content:space-between;align-items:center;
 }
 .carrito-btn{background:white;color:#0d6efd;padding:6px 12px;border-radius:20px;font-weight:bold;}
 
 /* BUSCADOR */
 .buscador{padding:10px;}
-.buscador input{
-  width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;font-size:15px;
-}
+.buscador input{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;font-size:15px;}
 
 /* CARRUSEL */
 .carrusel{margin:10px;border-radius:12px;overflow:hidden;position:relative;}
 .carrusel img{
-  width:100%;
-  height:200px;
-  object-fit:contain;
-  background:white;
-  display:none;
+  width:100%;height:200px;object-fit:contain;
+  background:white;display:none;
 }
 .carrusel img.activo{display:block;}
 .carrusel-btn{
@@ -50,35 +41,55 @@ header{
 .next{right:5px;}
 
 /* CATEGORIAS */
-.categorias{
-  display:flex;gap:10px;overflow-x:auto;padding:10px;
-}
-.categorias button{
-  flex:0 0 auto;padding:8px 14px;border:none;border-radius:20px;background:white;font-size:14px;
-}
+.categorias{display:flex;gap:10px;overflow-x:auto;padding:10px;}
+.categorias button{flex:0 0 auto;padding:8px 14px;border:none;border-radius:20px;background:white;font-size:14px;}
 
 /* PRODUCTOS */
 .container{padding:10px;}
-.productos{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-}
+.productos{display:flex;gap:10px;overflow-x:auto;}
 .producto{
-  min-width:160px;
-  background:white;
-  border-radius:12px;
-  padding:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,.1);
-  cursor:pointer;
+  min-width:160px;background:white;border-radius:12px;padding:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);cursor:pointer;
 }
-.producto img{
-  width:100%;
-  height:120px;
-  object-fit:contain;
-}
+.producto img{width:100%;height:120px;object-fit:contain;}
 .producto h3{font-size:14px;margin:5px 0;}
 .precio{color:var(--azul);font-weight:bold;}
+
+/* MODAL PRODUCTO */
+#modalProducto{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);
+  display:none;justify-content:center;align-items:center;z-index:200;
+}
+.modal-content{
+  background:white;width:90%;max-width:400px;
+  border-radius:16px;padding:15px;
+}
+.cerrar{float:right;font-size:20px;cursor:pointer;}
+
+/* GALERIA */
+.galeria{
+  display:flex;overflow-x:auto;gap:10px;
+  scroll-snap-type:x mandatory;
+}
+.galeria img{
+  min-width:100%;height:220px;object-fit:contain;
+  border-radius:12px;background:#fff;
+  scroll-snap-align:center;
+}
+
+/* EXTRAS */
+#extras select,#extras input{
+  width:100%;padding:8px;border-radius:8px;
+  border:1px solid #ccc;margin:6px 0;
+}
+
+/* BOTONES */
+.btn{
+  width:100%;padding:10px;border:none;border-radius:8px;margin-top:6px;
+  font-size:14px;
+}
+.btn-carrito{background:var(--azul);color:white;}
+.btn-pedir{background:var(--verde);color:white;}
 
 /* CARRITO */
 #overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:99;}
@@ -90,40 +101,6 @@ header{
 #carrito.activo{bottom:0;}
 .carrito-item{border-bottom:1px solid #ddd;padding:8px 0;}
 .eliminar{color:red;font-size:13px;cursor:pointer;}
-.btn{
-  width:100%;padding:10px;border:none;border-radius:8px;
-  margin-top:5px;font-size:14px;
-}
-.btn-carrito{background:var(--azul);color:white;}
-.btn-pedir{background:var(--verde);color:white;}
-
-/* MODAL PRODUCTO */
-#modalProducto{
-  position:fixed;inset:0;background:rgba(0,0,0,.6);
-  display:none;justify-content:center;align-items:center;
-  z-index:200;
-}
-.modal-content{
-  background:white;width:90%;max-width:400px;
-  border-radius:16px;padding:15px;
-}
-.cerrar{float:right;font-size:20px;cursor:pointer;}
-
-/* GALERIA */
-.galeria{
-  display:flex;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  gap:10px;
-}
-.galeria img{
-  min-width:100%;
-  height:220px;
-  object-fit:contain;
-  scroll-snap-align:center;
-  background:#fff;
-  border-radius:12px;
-}
 </style>
 </head>
 
@@ -148,31 +125,37 @@ header{
 
 <div class="categorias">
   <button onclick="filtrar('todos')">Todos</button>
-  <button onclick="filtrar('audio')">Audio</button>
-  <button onclick="filtrar('electronica')">Electrónica</button>
-  <button onclick="filtrar('hogar')">Hogar</button>
   <button onclick="filtrar('moda')">Moda</button>
-  <button onclick="filtrar('gaming')">Gaming</button>
+  <button onclick="filtrar('zapatos')">Zapatos</button>
+  <button onclick="filtrar('electronica')">Electrónica</button>
 </div>
 
 <div class="container">
 <div class="productos">
 
-<div class="producto" data-cat="audio" onclick="verProducto('Audífonos Bluetooth',450,'Audífonos inalámbricos con gran calidad de sonido',[
-'https://cdn-icons-png.flaticon.com/512/891/891462.png',
-'https://cdn-icons-png.flaticon.com/512/891/891455.png',
-'https://cdn-icons-png.flaticon.com/512/891/891450.png'
-])">
-  <img src="https://cdn-icons-png.flaticon.com/512/891/891462.png">
-  <h3>Audífonos Bluetooth</h3>
-  <p class="precio">$450</p>
+<div class="producto" data-cat="moda" onclick="verProducto('DEWALT driver',2500,'¡POTENCIA Y RENDIMIENTO CON DEWALT!',[ 
+'img/herramienta/taladro.jpeg',
+'img/dewalt2.jpg'
+],'moda')">
+
+  <img src="img/herramienta/taladro.jpeg">
+  <h3>DEWALT driver</h3>
+  <p class="precio">$2500</p>
+</div>
+
+<div class="producto" data-cat="zapatos" onclick="verProducto('Tenis Deportivos',750,'Tenis ideales para correr',[
+'https://cdn-icons-png.flaticon.com/512/2589/2589903.png',
+'https://cdn-icons-png.flaticon.com/512/2589/2589904.png'
+],'zapatos')">
+  <img src="https://cdn-icons-png.flaticon.com/512/2589/2589903.png">
+  <h3>Tenis Deportivos</h3>
+  <p class="precio">$750</p>
 </div>
 
 <div class="producto" data-cat="electronica" onclick="verProducto('Smartwatch',850,'Reloj inteligente con monitor de salud',[
 'https://cdn-icons-png.flaticon.com/512/747/747376.png',
-'https://cdn-icons-png.flaticon.com/512/747/747375.png',
-'https://cdn-icons-png.flaticon.com/512/747/747372.png'
-])">
+'https://cdn-icons-png.flaticon.com/512/747/747375.png'
+],'electronica')">
   <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
   <h3>Smartwatch</h3>
   <p class="precio">$850</p>
@@ -191,15 +174,16 @@ header{
 </div>
 
 <div id="modalProducto">
-  <div class="modal-content">
-    <span class="cerrar" onclick="cerrarModal()">❌</span>
-    <div class="galeria" id="galeria"></div>
-    <h3 id="modalNombre"></h3>
-    <p id="modalDesc"></p>
-    <p class="precio" id="modalPrecio"></p>
-    <button class="btn btn-carrito" onclick="agregarDesdeModal()">Agregar al carrito</button>
-    <button class="btn btn-pedir" onclick="pedirDesdeModal()">Pedir ahora</button>
-  </div>
+<div class="modal-content">
+<span class="cerrar" onclick="cerrarModal()">❌</span>
+<div class="galeria" id="galeria"></div>
+<h3 id="modalNombre"></h3>
+<p id="modalDesc"></p>
+<p class="precio" id="modalPrecio"></p>
+<div id="extras"></div>
+<button class="btn btn-carrito" onclick="agregarDesdeModal()">Agregar al carrito</button>
+<button class="btn btn-pedir" onclick="pedirDesdeModal()">Pedir ahora</button>
+</div>
 </div>
 
 <script>
@@ -218,33 +202,54 @@ carritoDiv.classList.toggle("activo");
 overlay.style.display=carritoDiv.classList.contains("activo")?"block":"none";
 }
 
-function verProducto(n,p,d,imgs){
-productoActual={n,p,d,imgs};
+function verProducto(n,p,d,imgs,cat=""){
+productoActual={n,p,d,imgs,cat};
+
 modalNombre.innerText=n;
 modalDesc.innerText=d;
 modalPrecio.innerText="$"+p;
+
 galeria.innerHTML="";
 imgs.forEach(img=>galeria.innerHTML+=`<img src="${img}">`);
+
+extras.innerHTML="";
+if(cat=="moda"||cat=="zapatos"){
+extras.innerHTML+=`
+<label>Talla</label>
+<select id="tallaSel">
+<option>S</option><option>M</option><option>L</option><option>XL</option>
+</select>
+<label>Cantidad</label>
+<input type="number" id="cantidadSel" value="1" min="1">
+`;
+}
 modalProducto.style.display="flex";
 }
 
 function cerrarModal(){modalProducto.style.display="none";}
 
 function agregarDesdeModal(){
-carrito.push({n:productoActual.n,p:productoActual.p});
+let talla=document.getElementById("tallaSel")?.value||"N/A";
+let cantidad=parseInt(document.getElementById("cantidadSel")?.value||1);
+for(let i=0;i<cantidad;i++){
+carrito.push({n:productoActual.n,p:productoActual.p,talla});
 total+=productoActual.p;
+}
 actualizar();
 cerrarModal();
 }
 
 function pedirDesdeModal(){
-window.open(`https://wa.me/52TU_NUMERO?text=Quiero pedir ${productoActual.n} $${productoActual.p}`);
+let talla=document.getElementById("tallaSel")?.value||"N/A";
+let cantidad=document.getElementById("cantidadSel")?.value||1;
+window.open(`https://wa.me/52TU_NUMERO?text=Quiero pedir ${cantidad} ${productoActual.n} Talla:${talla} $${productoActual.p}`);
 }
 
 function actualizar(){
 lista.innerHTML="";
 carrito.forEach((x,i)=>{
-lista.innerHTML+=`<div class="carrito-item">${x.n} - $${x.p}<div class="eliminar" onclick="eliminar(${i})">Eliminar</div></div>`;
+lista.innerHTML+=`<div class="carrito-item">${x.n} (${x.talla}) - $${x.p}
+<div class="eliminar" onclick="eliminar(${i})">Eliminar</div></div>`;
 });
 totalSpan.innerText=total;
 contador.innerText=carrito.length;
@@ -272,7 +277,7 @@ p.style.display=nombre.includes(q)?"block":"none";
 
 function enviarWhatsApp(){
 let t="Hola quiero pedir:%0A";
-carrito.forEach(x=>t+=`- ${x.n} $${x.p}%0A`);
+carrito.forEach(x=>t+=`- ${x.n} Talla:${x.talla} $${x.p}%0A`);
 window.open("https://wa.me/52TU_NUMERO?text="+t);
 }
 
@@ -285,3 +290,4 @@ contador=document.getElementById("contador");
 
 </body>
 </html>
+
