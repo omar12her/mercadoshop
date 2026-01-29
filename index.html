@@ -54,8 +54,10 @@ header{
 .producto img{width:100%;height:120px;object-fit:contain;}
 .producto h3{font-size:14px;margin:5px 0;}
 .precio{color:var(--azul);font-weight:bold;}
+.entrega{font-size:12px;color:#555;}
+.entrega span{color:#0d6efd;font-weight:600;}
 
-/* MODAL PRODUCTO */
+/* MODAL */
 #modalProducto{
   position:fixed;inset:0;background:rgba(0,0,0,.6);
   display:none;justify-content:center;align-items:center;z-index:200;
@@ -67,32 +69,16 @@ header{
 .cerrar{float:right;font-size:20px;cursor:pointer;}
 
 /* GALERIA */
-.galeria{
-  display:flex;overflow-x:auto;gap:10px;
-  scroll-snap-type:x mandatory;
-}
-.galeria img{
-  min-width:100%;height:220px;object-fit:contain;
-  border-radius:12px;background:#fff;
-  scroll-snap-align:center;
-}
-
-/* EXTRAS */
-#extras select,#extras input{
-  width:100%;padding:8px;border-radius:8px;
-  border:1px solid #ccc;margin:6px 0;
-}
+.galeria{display:flex;overflow-x:auto;gap:10px;}
+.galeria img{min-width:100%;height:220px;object-fit:contain;border-radius:12px;background:#fff;}
 
 /* BOTONES */
-.btn{
-  width:100%;padding:10px;border:none;border-radius:8px;margin-top:6px;
-  font-size:14px;
-}
+.btn{width:100%;padding:10px;border:none;border-radius:8px;margin-top:6px;font-size:14px;}
 .btn-carrito{background:var(--azul);color:white;}
 .btn-pedir{background:var(--verde);color:white;}
 
 /* CARRITO */
-#overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:99;}
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;}
 #carrito{
   position:fixed;bottom:-100%;left:0;width:100%;height:85%;
   background:white;border-radius:20px 20px 0 0;padding:15px;
@@ -133,32 +119,31 @@ header{
 <div class="container">
 <div class="productos">
 
-<div class="producto" data-cat="moda" onclick="verProducto('DEWALT driver',2500,'¡POTENCIA Y RENDIMIENTO CON DEWALT!',[ 
-'img/herramienta/taladro.jpeg',
-'img/dewalt2.jpg'
-],'moda')">
-
-  <img src="img/herramienta/taladro.jpeg">
-  <h3>DEWALT driver</h3>
-  <p class="precio">$2500</p>
+<div class="producto" data-cat="moda"
+onclick="verProducto('DEWALT driver',2500,'¡POTENCIA Y RENDIMIENTO CON DEWALT!',
+['img/herramienta/taladro.jpeg'],'moda',30)">
+<img src="img/herramienta/taladro.jpeg">
+<h3>DEWALT driver</h3>
+<p class="precio">$2500</p>
+<p class="entrega">Entrega: <span>30 días</span></p>
 </div>
 
-<div class="producto" data-cat="zapatos" onclick="verProducto('Tenis Deportivos',750,'Tenis ideales para correr',[
-'https://cdn-icons-png.flaticon.com/512/2589/2589903.png',
-'https://cdn-icons-png.flaticon.com/512/2589/2589904.png'
-],'zapatos')">
-  <img src="https://cdn-icons-png.flaticon.com/512/2589/2589903.png">
-  <h3>Tenis Deportivos</h3>
-  <p class="precio">$750</p>
+<div class="producto" data-cat="zapatos"
+onclick="verProducto('Tenis Deportivos',750,'Tenis ideales para correr',
+['https://cdn-icons-png.flaticon.com/512/2589/2589903.png'],'zapatos',15)">
+<img src="https://cdn-icons-png.flaticon.com/512/2589/2589903.png">
+<h3>Tenis Deportivos</h3>
+<p class="precio">$750</p>
+<p class="entrega">Entrega: <span>15 días</span></p>
 </div>
 
-<div class="producto" data-cat="electronica" onclick="verProducto('Smartwatch',850,'Reloj inteligente con monitor de salud',[
-'https://cdn-icons-png.flaticon.com/512/747/747376.png',
-'https://cdn-icons-png.flaticon.com/512/747/747375.png'
-],'electronica')">
-  <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
-  <h3>Smartwatch</h3>
-  <p class="precio">$850</p>
+<div class="producto" data-cat="electronica"
+onclick="verProducto('Smartwatch',850,'Reloj inteligente con monitor de salud',
+['https://cdn-icons-png.flaticon.com/512/747/747376.png'],'electronica',7)">
+<img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
+<h3>Smartwatch</h3>
+<p class="precio">$850</p>
+<p class="entrega">Entrega: <span>7 días</span></p>
 </div>
 
 </div>
@@ -180,7 +165,7 @@ header{
 <h3 id="modalNombre"></h3>
 <p id="modalDesc"></p>
 <p class="precio" id="modalPrecio"></p>
-<div id="extras"></div>
+<p class="entrega" id="modalEntrega"></p>
 <button class="btn btn-carrito" onclick="agregarDesdeModal()">Agregar al carrito</button>
 <button class="btn btn-pedir" onclick="pedirDesdeModal()">Pedir ahora</button>
 </div>
@@ -202,53 +187,29 @@ carritoDiv.classList.toggle("activo");
 overlay.style.display=carritoDiv.classList.contains("activo")?"block":"none";
 }
 
-function verProducto(n,p,d,imgs,cat=""){
-productoActual={n,p,d,imgs,cat};
-
+function verProducto(n,p,d,imgs,cat="",dias=0){
+productoActual={n,p,dias};
 modalNombre.innerText=n;
 modalDesc.innerText=d;
 modalPrecio.innerText="$"+p;
-
+modalEntrega.innerHTML=`🚚 Entrega estimada: <span>${dias} días</span>`;
 galeria.innerHTML="";
 imgs.forEach(img=>galeria.innerHTML+=`<img src="${img}">`);
-
-extras.innerHTML="";
-if(cat=="moda"||cat=="zapatos"){
-extras.innerHTML+=`
-<label>Talla</label>
-<select id="tallaSel">
-<option>S</option><option>M</option><option>L</option><option>XL</option>
-</select>
-<label>Cantidad</label>
-<input type="number" id="cantidadSel" value="1" min="1">
-`;
-}
 modalProducto.style.display="flex";
 }
 
 function cerrarModal(){modalProducto.style.display="none";}
 
 function agregarDesdeModal(){
-let talla=document.getElementById("tallaSel")?.value||"N/A";
-let cantidad=parseInt(document.getElementById("cantidadSel")?.value||1);
-for(let i=0;i<cantidad;i++){
-carrito.push({n:productoActual.n,p:productoActual.p,talla});
-total+=productoActual.p;
-}
-actualizar();
-cerrarModal();
-}
-
-function pedirDesdeModal(){
-let talla=document.getElementById("tallaSel")?.value||"N/A";
-let cantidad=document.getElementById("cantidadSel")?.value||1;
-window.open(`https://wa.me/52TU_NUMERO?text=Quiero pedir ${cantidad} ${productoActual.n} Talla:${talla} $${productoActual.p}`);
+carrito.push(productoActual);
+total+=productoActual.p||0;
+actualizar();cerrarModal();
 }
 
 function actualizar(){
 lista.innerHTML="";
 carrito.forEach((x,i)=>{
-lista.innerHTML+=`<div class="carrito-item">${x.n} (${x.talla}) - $${x.p}
+lista.innerHTML+=`<div class="carrito-item">${x.n} - Entrega ${x.dias} días
 <div class="eliminar" onclick="eliminar(${i})">Eliminar</div></div>`;
 });
 totalSpan.innerText=total;
@@ -256,7 +217,6 @@ contador.innerText=carrito.length;
 }
 
 function eliminar(i){
-total-=carrito[i].p;
 carrito.splice(i,1);
 actualizar();
 }
@@ -268,16 +228,15 @@ p.style.display=(cat=="todos"||p.dataset.cat==cat)?"block":"none";
 }
 
 function buscarProducto(){
-let q=document.getElementById("buscar").value.toLowerCase();
+let q=buscar.value.toLowerCase();
 document.querySelectorAll(".producto").forEach(p=>{
-let nombre=p.querySelector("h3").innerText.toLowerCase();
-p.style.display=nombre.includes(q)?"block":"none";
+p.style.display=p.querySelector("h3").innerText.toLowerCase().includes(q)?"block":"none";
 });
 }
 
 function enviarWhatsApp(){
 let t="Hola quiero pedir:%0A";
-carrito.forEach(x=>t+=`- ${x.n} Talla:${x.talla} $${x.p}%0A`);
+carrito.forEach(x=>t+=`- ${x.n} (Entrega ${x.dias} días)%0A`);
 window.open("https://wa.me/52TU_NUMERO?text="+t);
 }
 
@@ -290,4 +249,3 @@ contador=document.getElementById("contador");
 
 </body>
 </html>
-
