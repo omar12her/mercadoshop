@@ -1,6 +1,17 @@
 const productos=[
 
 {
+nombre:"Hidrolavadora Electrica 1200w 1600psi",
+precio:899,
+descripcion:"Alta presion",
+categoria:"herramientas",
+imagenes:[
+"https://cdn-icons-png.flaticon.com/512/891/891462.png",
+"https://cdn-icons-png.flaticon.com/512/1048/1048953.png"
+]
+},
+  
+{
 nombre:"Taladro DEWALT",
 precio:2500,
 descripcion:"Taladro profesional",
