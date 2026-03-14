@@ -2,14 +2,14 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>MercadoShop</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MercadoShop</title>
 
 <style>
 
 body{
-font-family:Arial;
 margin:0;
+font-family:Arial;
 background:#f4f6f9;
 }
 
@@ -29,7 +29,6 @@ background:white;
 color:#0d6efd;
 padding:6px 12px;
 border-radius:20px;
-font-weight:bold;
 cursor:pointer;
 }
 
@@ -51,14 +50,13 @@ border:1px solid #ccc;
 
 .carrusel{
 margin:10px;
-border-radius:15px;
+border-radius:12px;
 overflow:hidden;
-position:relative;
 }
 
 .carrusel img{
 width:100%;
-height:200px;
+height:180px;
 object-fit:cover;
 display:none;
 }
@@ -67,46 +65,44 @@ display:none;
 display:block;
 }
 
-.carrusel-btn{
-position:absolute;
-top:50%;
-transform:translateY(-50%);
-background:rgba(0,0,0,.4);
-color:white;
-border:none;
-font-size:22px;
-padding:5px 10px;
-cursor:pointer;
+/* CATEGORIAS */
+
+.categorias{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding:10px;
 }
 
-.prev{left:10px;}
-.next{right:10px;}
+.categorias button{
+border:none;
+background:white;
+padding:8px 14px;
+border-radius:20px;
+cursor:pointer;
+}
 
 /* PRODUCTOS */
 
 .productos{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
-gap:15px;
-padding:15px;
+display:flex;
+gap:12px;
+overflow-x:auto;
+padding:10px;
 }
 
 .producto{
+min-width:160px;
 background:white;
 border-radius:12px;
 padding:10px;
 box-shadow:0 2px 10px rgba(0,0,0,.1);
 cursor:pointer;
-transition:.3s;
-}
-
-.producto:hover{
-transform:translateY(-5px);
 }
 
 .producto img{
 width:100%;
-height:150px;
+height:120px;
 object-fit:cover;
 border-radius:8px;
 }
@@ -129,19 +125,35 @@ align-items:center;
 
 .modal-content{
 background:white;
-padding:20px;
-border-radius:15px;
+padding:15px;
+border-radius:12px;
 width:90%;
 max-width:400px;
 }
+
+/* GALERIA */
+
+.galeria{
+display:flex;
+overflow-x:auto;
+gap:10px;
+}
+
+.galeria img{
+min-width:100%;
+height:200px;
+object-fit:cover;
+border-radius:10px;
+}
+
+/* BOTONES */
 
 .btn{
 width:100%;
 padding:10px;
 border:none;
 border-radius:8px;
-margin-top:10px;
-font-size:15px;
+margin-top:6px;
 cursor:pointer;
 }
 
@@ -165,7 +177,7 @@ width:100%;
 height:80%;
 background:white;
 border-radius:20px 20px 0 0;
-padding:20px;
+padding:15px;
 transition:.4s;
 overflow:auto;
 }
@@ -176,7 +188,7 @@ bottom:0;
 
 .carrito-item{
 border-bottom:1px solid #ddd;
-padding:10px 0;
+padding:8px 0;
 }
 
 .eliminar{
@@ -201,20 +213,21 @@ font-size:13px;
 <input type="search" placeholder="Buscar productos..." id="buscar" onkeyup="buscarProducto()">
 </div>
 
-<!-- CARRUSEL DE OFERTAS -->
+<!-- CARRUSEL -->
 
 <div class="carrusel">
-
 <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da" class="slide activo">
-
 <img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db" class="slide">
-
 <img src="https://images.unsplash.com/photo-1607083206173-7c5c7d6c2b1e" class="slide">
+</div>
 
-<button class="carrusel-btn prev" onclick="cambiarSlide(-1)">❮</button>
+<!-- CATEGORIAS -->
 
-<button class="carrusel-btn next" onclick="cambiarSlide(1)">❯</button>
-
+<div class="categorias">
+<button onclick="filtrar('todos')">Todos</button>
+<button onclick="filtrar('electronica')">Electrónica</button>
+<button onclick="filtrar('zapatos')">Zapatos</button>
+<button onclick="filtrar('herramientas')">Herramientas</button>
 </div>
 
 <!-- PRODUCTOS -->
@@ -228,18 +241,14 @@ font-size:13px;
 
 <h3 id="modalNombre"></h3>
 
-<img id="modalImg" style="width:100%;height:200px;object-fit:cover;border-radius:10px">
+<div class="galeria" id="galeria"></div>
 
 <p id="modalDesc"></p>
 
 <p class="precio" id="modalPrecio"></p>
 
-<p id="modalEntrega"></p>
-
 <button class="btn btn-carrito" onclick="agregarCarrito()">Agregar al carrito</button>
-
-<button class="btn btn-whatsapp" onclick="pedirWhatsApp()">Pedir por WhatsApp</button>
-
+<button class="btn btn-whatsapp" onclick="pedirWhatsApp()">Pedir ahora</button>
 <button class="btn" onclick="cerrarModal()">Cerrar</button>
 
 </div>
@@ -255,39 +264,13 @@ font-size:13px;
 
 <p><strong>Total: $<span id="total">0</span></strong></p>
 
-<button class="btn btn-whatsapp" onclick="enviarWhatsApp()">Pedir todo por WhatsApp</button>
+<button class="btn btn-whatsapp" onclick="enviarWhatsApp()">Pedir por WhatsApp</button>
 
 </div>
 
+<script src="productos.js"></script>
+
 <script>
-
-const productos=[
-
-{
-nombre:"Taladro DEWALT",
-precio:2500,
-descripcion:"Taladro profesional",
-imagen:"https://cdn-icons-png.flaticon.com/512/891/891462.png",
-dias:30
-},
-
-{
-nombre:"Tenis deportivos",
-precio:750,
-descripcion:"Ideales para correr",
-imagen:"https://cdn-icons-png.flaticon.com/512/2589/2589903.png",
-dias:15
-},
-
-{
-nombre:"Smartwatch",
-precio:850,
-descripcion:"Reloj inteligente",
-imagen:"https://cdn-icons-png.flaticon.com/512/747/747376.png",
-dias:7
-}
-
-];
 
 let carrito=[];
 let total=0;
@@ -301,13 +284,12 @@ productos.forEach(p=>{
 
 let card=document.createElement("div");
 card.className="producto";
+card.dataset.cat=p.categoria;
 
 card.innerHTML=`
-
-<img src="${p.imagen}">
+<img src="${p.imagenes[0]}">
 <h3>${p.nombre}</h3>
 <p class="precio">$${p.precio}</p>
-
 `;
 
 card.onclick=()=>verProducto(p);
@@ -327,8 +309,12 @@ modal.style.display="flex";
 modalNombre.innerText=p.nombre;
 modalDesc.innerText=p.descripcion;
 modalPrecio.innerText="$"+p.precio;
-modalEntrega.innerText="Entrega: "+p.dias+" días";
-modalImg.src=p.imagen;
+
+galeria.innerHTML="";
+
+p.imagenes.forEach(img=>{
+galeria.innerHTML+=`<img src="${img}">`;
+});
 
 productoActual=p;
 
@@ -346,8 +332,6 @@ total+=productoActual.precio;
 
 actualizarCarrito();
 
-cerrarModal();
-
 }
 
 function actualizarCarrito(){
@@ -357,18 +341,15 @@ lista.innerHTML="";
 carrito.forEach((p,i)=>{
 
 lista.innerHTML+=`
-
 <div class="carrito-item">
 ${p.nombre} - $${p.precio}
 <div class="eliminar" onclick="eliminar(${i})">Eliminar</div>
 </div>
-
 `;
 
 });
 
 contador.innerText=carrito.length;
-
 totalSpan.innerText=total;
 
 }
@@ -384,21 +365,23 @@ actualizarCarrito();
 }
 
 function toggleCarrito(){
-
 carritoDiv.classList.toggle("activo");
+}
+
+function filtrar(cat){
+
+document.querySelectorAll(".producto").forEach(p=>{
+p.style.display=(cat=="todos"||p.dataset.cat==cat)?"block":"none";
+});
 
 }
 
 function buscarProducto(){
 
-let texto=buscar.value.toLowerCase();
+let q=buscar.value.toLowerCase();
 
 document.querySelectorAll(".producto").forEach(p=>{
-
-let nombre=p.querySelector("h3").innerText.toLowerCase();
-
-p.style.display=nombre.includes(texto)?"block":"none";
-
+p.style.display=p.querySelector("h3").innerText.toLowerCase().includes(q)?"block":"none";
 });
 
 }
@@ -408,41 +391,33 @@ function enviarWhatsApp(){
 let texto="Hola quiero pedir:%0A";
 
 carrito.forEach(p=>{
-
 texto+=`- ${p.nombre} $${p.precio}%0A`;
-
 });
 
-window.open("https://wa.me/522727224580?text="+texto);
+texto+=`Total: $${total}`;
+
+window.open("https://wa.me/52TU_NUMERO?text="+texto);
 
 }
 
 function pedirWhatsApp(){
 
-let texto="Hola quiero pedir: "+productoActual.nombre;
+let texto=`Hola quiero pedir ${productoActual.nombre} - $${productoActual.precio}`;
 
-window.open("https://wa.me/522727224580?"+texto);
+window.open("https://wa.me/52TU_NUMERO?text="+texto);
 
 }
-
-/* CARRUSEL */
 
 let slides=document.querySelectorAll(".slide");
-let indexSlide=0;
-
-function cambiarSlide(n){
-
-slides[indexSlide].classList.remove("activo");
-
-indexSlide=(indexSlide+n+slides.length)%slides.length;
-
-slides[indexSlide].classList.add("activo");
-
-}
+let index=0;
 
 setInterval(()=>{
 
-cambiarSlide(1);
+slides[index].classList.remove("activo");
+
+index=(index+1)%slides.length;
+
+slides[index].classList.add("activo");
 
 },4000);
 
@@ -455,4 +430,3 @@ const totalSpan=document.getElementById("total");
 
 </body>
 </html>
-
