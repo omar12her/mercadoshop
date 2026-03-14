@@ -6,8 +6,7 @@ precio:899,
 descripcion:"Alta presion",
 categoria:"herramientas",
 imagenes:[
-"https://cdn-icons-png.flaticon.com/512/891/891462.png",
-"https://cdn-icons-png.flaticon.com/512/1048/1048953.png"
+"img/h1.jpg"
 ]
 },
   
