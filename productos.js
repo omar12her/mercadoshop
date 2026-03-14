@@ -1,39 +1,36 @@
-const productos = [
+const productos=[
 
 {
 nombre:"Taladro DEWALT",
 precio:2500,
-descripcion:"Taladro profesional de alto rendimiento",
-imagen:"img/taladro.jpeg",
+descripcion:"Taladro profesional",
 categoria:"herramientas",
-dias:30
+imagenes:[
+"https://cdn-icons-png.flaticon.com/512/891/891462.png",
+"https://cdn-icons-png.flaticon.com/512/1048/1048953.png"
+]
 },
 
 {
-nombre:"Tenis Deportivos",
+nombre:"Tenis deportivos",
 precio:750,
-descripcion:"Tenis cómodos para correr",
-imagen:"https://cdn-icons-png.flaticon.com/512/2589/2589903.png",
+descripcion:"Ideales para correr",
 categoria:"zapatos",
-dias:15
+imagenes:[
+"https://cdn-icons-png.flaticon.com/512/2589/2589903.png",
+"https://cdn-icons-png.flaticon.com/512/2589/2589874.png"
+]
 },
 
 {
 nombre:"Smartwatch",
 precio:850,
-descripcion:"Reloj inteligente con monitor de salud",
-imagen:"https://cdn-icons-png.flaticon.com/512/747/747376.png",
+descripcion:"Reloj inteligente",
 categoria:"electronica",
-dias:7
-},
-
-{
-nombre:"Audífonos Bluetooth",
-precio:350,
-descripcion:"Audífonos inalámbricos con gran sonido",
-imagen:"https://cdn-icons-png.flaticon.com/512/727/727245.png",
-categoria:"electronica",
-dias:10
+imagenes:[
+"https://cdn-icons-png.flaticon.com/512/747/747376.png",
+"https://cdn-icons-png.flaticon.com/512/747/747379.png"
+]
 }
 
 ];
