@@ -17,8 +17,8 @@ precio:2500,
 descripcion:"Para dormitorio, compañera para dormir",
 categoria:"Todos",
 imagenes:[
-"img/O2.jpeg",
-  "img/o1.jpeg"
+  "img/o1.jpeg",
+  "img/02.jpeg",
 ]
 },
 
