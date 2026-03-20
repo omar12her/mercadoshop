@@ -12,13 +12,13 @@ imagenes:[
 },
   
 {
-nombre:"Taladro DEWALT",
+nombre:"Luz nocturna decorativa",
 precio:2500,
-descripcion:"Taladro profesional",
-categoria:"herramientas",
+descripcion:"Para dormitorio, compañera para dormir",
+categoria:"Todos",
 imagenes:[
-"https://cdn-icons-png.flaticon.com/512/891/891462.png",
-"https://cdn-icons-png.flaticon.com/512/1048/1048953.png"
+"img/O2.jpeg",
+  "img/o1.jpeg"
 ]
 },
 
