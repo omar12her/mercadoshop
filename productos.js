@@ -4,6 +4,7 @@ const productos=[
 nombre:"Hidrolavadora Electrica 1200w 1600psi",
 precio:899,
 descripcion:"Alta presion",
+fila: "fila1",
 categoria:"herramientas",
 imagenes:[
 "img/h1.jpeg",
@@ -14,6 +15,7 @@ imagenes:[
 {
 nombre:"Luz nocturna decorativa",
 precio:150,
+      fila: "fila1",
 descripcion:"Para dormitorio, compañera para dormir",
 categoria:"Todos",
 imagenes:[
@@ -25,6 +27,7 @@ imagenes:[
 {
 nombre:"Tenis deportivos",
 precio:750,
+      fila: "fila2",
 descripcion:"Ideales para correr",
 categoria:"zapatos",
 imagenes:[
@@ -36,6 +39,7 @@ imagenes:[
 {
 nombre:"Smartwatch",
 precio:850,
+      fila: "fila2",
 descripcion:"Reloj inteligente",
 categoria:"electronica",
 imagenes:[
@@ -48,6 +52,7 @@ imagenes:[
 nombre:"unooooooo",
 precio:150,
 descripcion:"Para dormitorio, compañera para dormir",
+        fila: "fila3",
 categoria:"Todos",
 imagenes:[
   "img/o1.jpeg",
