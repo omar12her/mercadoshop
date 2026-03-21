@@ -130,6 +130,17 @@ color:#0d6efd;
 font-weight:bold;
 }
 
+/* NUEVO: FILAS HORIZONTALES */
+.fila{
+display:flex;
+gap:12px;
+overflow-x:auto;
+padding:10px;
+}
+.fila::-webkit-scrollbar{
+display:none;
+}
+
 /* MODAL */
 
 #modal{
@@ -246,6 +257,16 @@ font-size:13px;
 
 <div class="productos" id="productos"></div>
 
+<!-- NUEVAS FILAS -->
+<h3 style="padding:10px;">Más productos 🛒</h3>
+<div class="fila" id="fila1"></div>
+
+<h3 style="padding:10px;">Ofertas 🔥</h3>
+<div class="fila" id="fila2"></div>
+
+<h3 style="padding:10px;">Recomendados ⭐</h3>
+<div class="fila" id="fila3"></div>
+
 <div id="modal">
 <div class="modal-content">
 
@@ -287,8 +308,11 @@ let productoActual={};
 function cargarProductos(){
 
 let cont=document.getElementById("productos");
+let fila1=document.getElementById("fila1");
+let fila2=document.getElementById("fila2");
+let fila3=document.getElementById("fila3");
 
-productos.forEach(p=>{
+productos.forEach((p,i)=>{
 
 let card=document.createElement("div");
 card.className="producto";
@@ -304,28 +328,36 @@ card.onclick=()=>verProducto(p);
 
 cont.appendChild(card);
 
+/* CLON PARA FILAS */
+let card2=card.cloneNode(true);
+card2.onclick=()=>verProducto(p);
+
+if(i % 3 == 0){
+fila1.appendChild(card2);
+}else if(i % 3 == 1){
+fila2.appendChild(card2);
+}else{
+fila3.appendChild(card2);
+}
+
 });
 
 }
 
 cargarProductos();
 
+/* TODO LO DEMÁS IGUAL (no se movió nada) */
+
 function verProducto(p){
-
 modal.style.display="flex";
-
 modalNombre.innerText=p.nombre;
 modalDesc.innerText=p.descripcion;
 modalPrecio.innerText="$"+p.precio;
-
 galeria.innerHTML="";
-
 p.imagenes.forEach(img=>{
 galeria.innerHTML+=`<img src="${img}">`;
 });
-
 productoActual=p;
-
 }
 
 function cerrarModal(){
@@ -333,57 +365,33 @@ modal.style.display="none";
 }
 
 function agregarCarrito(){
-
 carrito.push(productoActual);
-
 total+=productoActual.precio;
-
 actualizarCarrito();
-
-/* ANIMACION DEL CARRITO */
-
 let btn=document.querySelector(".carrito-btn");
-
 btn.classList.add("carrito-animado");
-
-setTimeout(()=>{
-btn.classList.remove("carrito-animado");
-},400);
-
-/* CERRAR MODAL */
-
+setTimeout(()=>{btn.classList.remove("carrito-animado");},400);
 modal.style.display="none";
-
 }
 
 function actualizarCarrito(){
-
 lista.innerHTML="";
-
 carrito.forEach((p,i)=>{
-
 lista.innerHTML+=`
 <div class="carrito-item">
 ${p.nombre} - $${p.precio}
 <div class="eliminar" onclick="eliminar(${i})">Eliminar</div>
 </div>
 `;
-
 });
-
 contador.innerText=carrito.length;
 totalSpan.innerText=total;
-
 }
 
 function eliminar(i){
-
 total-=carrito[i].precio;
-
 carrito.splice(i,1);
-
 actualizarCarrito();
-
 }
 
 function toggleCarrito(){
@@ -391,56 +399,39 @@ carritoDiv.classList.toggle("activo");
 }
 
 function filtrar(cat){
-
 document.querySelectorAll(".producto").forEach(p=>{
 p.style.display=(cat=="todos"||p.dataset.cat==cat)?"block":"none";
 });
-
 }
 
 function buscarProducto(){
-
 let q=buscar.value.toLowerCase();
-
 document.querySelectorAll(".producto").forEach(p=>{
 p.style.display=p.querySelector("h3").innerText.toLowerCase().includes(q)?"block":"none";
 });
-
 }
 
 function enviarWhatsApp(){
-
 let texto="Hola quiero pedir:%0A";
-
 carrito.forEach(p=>{
 texto+=`- ${p.nombre} $${p.precio}%0A`;
 });
-
 texto+=`Total: $${total}`;
-
 window.open("https://wa.me/522727224580?text="+texto);
-
 }
 
 function pedirWhatsApp(){
-
 let texto=`Hola quiero pedir ${productoActual.nombre} - $${productoActual.precio}`;
-
 window.open("https://wa.me/522727224580?text="+texto);
-
 }
 
 let slides=document.querySelectorAll(".slide");
 let index=0;
 
 setInterval(()=>{
-
 slides[index].classList.remove("activo");
-
 index=(index+1)%slides.length;
-
 slides[index].classList.add("activo");
-
 },4000);
 
 const carritoDiv=document.getElementById("carrito");
