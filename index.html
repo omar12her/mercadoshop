@@ -14,7 +14,6 @@ background:#f4f6f9;
 }
 
 /* HEADER */
-
 header{
 background:linear-gradient(135deg,#0d6efd,#084298);
 color:white;
@@ -34,7 +33,6 @@ transition:.3s;
 }
 
 /* ANIMACION CARRITO */
-
 @keyframes agregarAnimacion{
 0%{transform:scale(1);}
 50%{transform:scale(1.2);}
@@ -46,7 +44,6 @@ animation:agregarAnimacion .4s;
 }
 
 /* BUSCADOR */
-
 .buscador{
 padding:10px;
 background:white;
@@ -60,7 +57,6 @@ border:1px solid #ccc;
 }
 
 /* CARRUSEL */
-
 .carrusel{
 margin:10px;
 border-radius:12px;
@@ -79,7 +75,6 @@ display:block;
 }
 
 /* CATEGORIAS */
-
 .categorias{
 display:flex;
 gap:10px;
@@ -96,16 +91,15 @@ cursor:pointer;
 }
 
 /* PRODUCTOS */
-
 .productos{
 display:flex;
-flex-wrap:wrap;
 gap:12px;
+overflow-x:auto;
 padding:10px;
 }
 
 .producto{
-width:160px;
+min-width:160px;
 background:white;
 border-radius:12px;
 padding:10px;
@@ -131,7 +125,6 @@ font-weight:bold;
 }
 
 /* MODAL */
-
 #modal{
 position:fixed;
 inset:0;
@@ -150,7 +143,6 @@ max-width:400px;
 }
 
 /* GALERIA */
-
 .galeria{
 display:flex;
 overflow-x:auto;
@@ -165,7 +157,6 @@ border-radius:10px;
 }
 
 /* BOTONES */
-
 .btn{
 width:100%;
 padding:10px;
@@ -186,7 +177,6 @@ color:white;
 }
 
 /* CARRITO */
-
 #carrito{
 position:fixed;
 bottom:-100%;
@@ -250,11 +240,9 @@ font-size:13px;
 <div class="modal-content">
 
 <h3 id="modalNombre"></h3>
-
 <div class="galeria" id="galeria"></div>
 
 <p id="modalDesc"></p>
-
 <p class="precio" id="modalPrecio"></p>
 
 <button class="btn btn-carrito" onclick="agregarCarrito()">Agregar al carrito</button>
@@ -265,15 +253,10 @@ font-size:13px;
 </div>
 
 <div id="carrito">
-
 <h3>Tu carrito</h3>
-
 <div id="lista"></div>
-
 <p><strong>Total: $<span id="total">0</span></strong></p>
-
 <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">Pedir por WhatsApp</button>
-
 </div>
 
 <script src="productos.js"></script>
@@ -285,11 +268,9 @@ let total=0;
 let productoActual={};
 
 function cargarProductos(){
-
 let cont=document.getElementById("productos");
 
 productos.forEach(p=>{
-
 let card=document.createElement("div");
 card.className="producto";
 card.dataset.cat=p.categoria;
@@ -301,31 +282,24 @@ card.innerHTML=`
 `;
 
 card.onclick=()=>verProducto(p);
-
 cont.appendChild(card);
-
 });
-
 }
 
 cargarProductos();
 
 function verProducto(p){
-
 modal.style.display="flex";
-
 modalNombre.innerText=p.nombre;
 modalDesc.innerText=p.descripcion;
 modalPrecio.innerText="$"+p.precio;
 
 galeria.innerHTML="";
-
 p.imagenes.forEach(img=>{
 galeria.innerHTML+=`<img src="${img}">`;
 });
 
 productoActual=p;
-
 }
 
 function cerrarModal(){
@@ -333,57 +307,38 @@ modal.style.display="none";
 }
 
 function agregarCarrito(){
-
 carrito.push(productoActual);
-
 total+=productoActual.precio;
-
 actualizarCarrito();
 
-/* ANIMACION DEL CARRITO */
-
 let btn=document.querySelector(".carrito-btn");
-
 btn.classList.add("carrito-animado");
 
-setTimeout(()=>{
-btn.classList.remove("carrito-animado");
-},400);
-
-/* CERRAR MODAL */
+setTimeout(()=>{btn.classList.remove("carrito-animado");},400);
 
 modal.style.display="none";
-
 }
 
 function actualizarCarrito(){
-
 lista.innerHTML="";
 
 carrito.forEach((p,i)=>{
-
 lista.innerHTML+=`
 <div class="carrito-item">
 ${p.nombre} - $${p.precio}
 <div class="eliminar" onclick="eliminar(${i})">Eliminar</div>
 </div>
 `;
-
 });
 
 contador.innerText=carrito.length;
 totalSpan.innerText=total;
-
 }
 
 function eliminar(i){
-
 total-=carrito[i].precio;
-
 carrito.splice(i,1);
-
 actualizarCarrito();
-
 }
 
 function toggleCarrito(){
@@ -391,25 +346,20 @@ carritoDiv.classList.toggle("activo");
 }
 
 function filtrar(cat){
-
 document.querySelectorAll(".producto").forEach(p=>{
 p.style.display=(cat=="todos"||p.dataset.cat==cat)?"block":"none";
 });
-
 }
 
 function buscarProducto(){
-
 let q=buscar.value.toLowerCase();
 
 document.querySelectorAll(".producto").forEach(p=>{
 p.style.display=p.querySelector("h3").innerText.toLowerCase().includes(q)?"block":"none";
 });
-
 }
 
 function enviarWhatsApp(){
-
 let texto="Hola quiero pedir:%0A";
 
 carrito.forEach(p=>{
@@ -419,28 +369,20 @@ texto+=`- ${p.nombre} $${p.precio}%0A`;
 texto+=`Total: $${total}`;
 
 window.open("https://wa.me/522727224580?text="+texto);
-
 }
 
 function pedirWhatsApp(){
-
 let texto=`Hola quiero pedir ${productoActual.nombre} - $${productoActual.precio}`;
-
 window.open("https://wa.me/522727224580?text="+texto);
-
 }
 
 let slides=document.querySelectorAll(".slide");
 let index=0;
 
 setInterval(()=>{
-
 slides[index].classList.remove("activo");
-
 index=(index+1)%slides.length;
-
 slides[index].classList.add("activo");
-
 },4000);
 
 const carritoDiv=document.getElementById("carrito");
@@ -452,4 +394,3 @@ const totalSpan=document.getElementById("total");
 
 </body>
 </html>
-
