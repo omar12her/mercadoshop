@@ -204,6 +204,16 @@ color:red;
 cursor:pointer;
 font-size:13px;
 }
+.fila{
+display:flex;
+gap:12px;
+overflow-x:auto;
+padding:10px;
+}
+
+.fila::-webkit-scrollbar{
+display:none;
+}
 
 </style>
 </head>
@@ -235,6 +245,9 @@ font-size:13px;
 </div>
 
 <div class="productos" id="productos"></div>
+<div class="fila" id="fila1"></div>
+<div class="fila" id="fila2"></div>
+<div class="fila" id="fila3"></div>
 
 <div id="modal">
 <div class="modal-content">
@@ -268,12 +281,11 @@ let total=0;
 let productoActual={};
 
 function cargarProductos(){
-let cont=document.getElementById("productos");
 
 productos.forEach(p=>{
+
 let card=document.createElement("div");
 card.className="producto";
-card.dataset.cat=p.categoria;
 
 card.innerHTML=`
 <img src="${p.imagenes[0]}">
@@ -282,9 +294,17 @@ card.innerHTML=`
 `;
 
 card.onclick=()=>verProducto(p);
-cont.appendChild(card);
-});
+
+/* 👇 AQUÍ DECIDE LA FILA */
+let fila=document.getElementById(p.fila);
+
+if(fila){
+fila.appendChild(card);
 }
+
+});
+
+
 
 cargarProductos();
 
