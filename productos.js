@@ -42,10 +42,10 @@ imagenes:[
 "https://cdn-icons-png.flaticon.com/512/747/747376.png",
 "https://cdn-icons-png.flaticon.com/512/747/747379.png"
 ]
-}
-  /////////2////////
+},
+
   {
-nombre:"Luz nocturna decorativa",
+nombre:"unooooooo",
 precio:150,
 descripcion:"Para dormitorio, compañera para dormir",
 categoria:"Todos",
