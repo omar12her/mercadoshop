@@ -52,7 +52,7 @@ imagenes:[
 nombre:"unooooooo",
 precio:150,
 descripcion:"Para dormitorio, compañera para dormir",
-        fila: "fila3",
+        fila: "fila2",
 categoria:"Todos",
 imagenes:[
   "img/o1.jpeg",
