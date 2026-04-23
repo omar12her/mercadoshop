@@ -1,7 +1,7 @@
 const productos=[
 
 {
-nombre:" Electrica 1200w1600psi",
+nombre:" HIDRO Electrica 1200w1600psi",
 precio:899,
 descripcion:"Alta presion",
 fila: "fila1",
