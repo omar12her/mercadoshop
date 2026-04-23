@@ -27,7 +27,7 @@ imagenes:[
 {
 nombre:"Tenis deportivos",
 precio:750,
-      fila: "fila2",
+      fila: "fila1",
 descripcion:"Ideales para correr",
 categoria:"zapatos",
 imagenes:[
@@ -39,7 +39,7 @@ imagenes:[
 {
 nombre:"Smartwatch",
 precio:850,
-      fila: "fila2",
+      fila: "fila1",
 descripcion:"Reloj inteligente",
 categoria:"electronica",
 imagenes:[
