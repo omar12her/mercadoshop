@@ -286,6 +286,7 @@ productos.forEach(p=>{
 
 let card=document.createElement("div");
 card.className="producto";
+  card.dataset.cat = p.categoria.toLowerCase();
 
 card.innerHTML=`
 <img src="${p.imagenes[0]}">
