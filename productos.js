@@ -75,7 +75,7 @@ imagenes:[
 {
 nombre:"Smartwatch",
 precio:850,
-   fila: "fila3",
+   fila: "fila2",
 descripcion:"Reloj inteligente",
 categoria:"electronica",
 imagenes:[
