@@ -1,7 +1,7 @@
 const productos=[
 
 {
-nombre:"Hidrolavadora Electrica 1200w 1600psi",
+nombre:" Electrica 1200w 1600psi",
 precio:899,
 descripcion:"Alta presion",
 fila: "fila1",
