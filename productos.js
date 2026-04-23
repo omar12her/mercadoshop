@@ -17,7 +17,7 @@ nombre:"Luz nocturna decorativa",
 precio:150,
       fila: "fila1",
 descripcion:"Para dormitorio, compañera para dormir",
-categoria:"Todos",
+categoria:"herramientas",
 imagenes:[
   "img/o1.jpeg",
   "img/02.jpeg",
