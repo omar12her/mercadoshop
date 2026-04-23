@@ -29,7 +29,7 @@ nombre:"Tenis deportivos",
 precio:750,
       fila: "fila1",
 descripcion:"Ideales para correr",
-categoria:"zapatos",
+categoria:"herramientas",
 imagenes:[
 "https://cdn-icons-png.flaticon.com/512/2589/2589903.png",
 "https://cdn-icons-png.flaticon.com/512/2589/2589874.png"
